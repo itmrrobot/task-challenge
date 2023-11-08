@@ -152,12 +152,11 @@
   padding: 0 60px;
   top: 208px;
   width: 560px;
-  height: 401px;
   position: absolute;
   border-radius: 24px;
   background: var(--fifth-color);
-  /* left: 358px; */
-  right: 448px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .modal-content__head {
@@ -193,6 +192,7 @@
   height: 50px;
   margin: 10px 0 20px;
   outline: none;
+  font-family: Poppins;
 }
 
 .input-task::placeholder {
@@ -217,6 +217,7 @@
   font-weight: 400;
   font-family: Poppins;
   line-height: 16px;
+  max-height: 30px;
   cursor: pointer;
   padding: 7px 0;
   background: transparent;
@@ -267,7 +268,7 @@
 .wrap-btn {
   display: flex;
   justify-content: flex-end;
-  margin-top: 50px;
+  margin: 50px 0 40px;
 }
 
 .btn-add-task,.btn-edit-task {
@@ -289,16 +290,13 @@
 
 .disabled {
   color: var(--fifth-color);
-  border: 1px solid var(--eighth-color);
+  border: none;
   background: var(--eighth-color);
   cursor: not-allowed;
 }
 
 .modal-delete-content {
-  height: 222px;
   top: 290px;
-  left: 403px;
-  right: 403px;
   padding: 40px 130px;
 }
 
@@ -314,6 +312,7 @@
   margin-top: 30px;
   display: flex;
   gap: 25px;
+  justify-content: center;
 }
 
 .btn-delete-task {

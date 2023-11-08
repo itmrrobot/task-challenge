@@ -33,10 +33,8 @@
   .modal-content {
     width: 370px;
     height: 391px;
-    right: 15px;
     top: 328px;
     padding: 0 30px;
-    left: 15px;
   }
   .modal-delete-content {
     height: auto;
