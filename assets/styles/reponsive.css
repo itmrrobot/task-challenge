@@ -1,0 +1,55 @@
+@media (max-width: 738px) {
+  body {
+    background: var(--fifth-color);
+  }
+  .container {
+    max-width: 400px;
+    padding: 0 15px;
+    margin: 0 auto;
+  }
+  .header {
+    gap: 52px;
+  }
+  .item {
+    display: block;
+  }
+  .wrap-name {
+    margin: 19px 0px 13px;
+  }
+  .wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .wrap-priority {
+    padding: 0px 0 18px;
+  }
+  .status-icon {
+    margin: 15px 0;
+  }
+  .group-btn {
+    margin-left: 0px;
+    margin-bottom: 25px;
+  }
+  .modal-content {
+    width: 370px;
+    height: 391px;
+    right: 15px;
+    top: 328px;
+    padding: 0 30px;
+    left: 15px;
+  }
+  .modal-delete-content {
+    height: auto;
+  }
+  .input-task {
+    padding: 14px 12.68px;
+  }
+  .modal-delete-title {
+    margin: 40px 0 0px;
+  }
+  .modal-delete-group-btn {
+    padding: 0 0 30px;
+    justify-content: center;
+    gap: 14px;
+  }
+}

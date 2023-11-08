@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --first-color: #F0F2F5;
+    --second-color: #0A1629;
+    --third-color: #713FFF;
+    --fourth-color: #713fff40;
+    --fifth-color: #FFF;
+    --sixth-color: #c4cbd61c;
+    --seventh-color: #91929E;
+    --eighth-color: #7D8592;
+    --nineth-color: #7c859224;
+    --tenth-color: #00000066;
+    --eleventh-color: #D8E0F0;
+    --twelfth-color: #F73446;
+    --thirdteenth-color: #FFBD21;
+    --fourteenth-color: #0AC947;
+}
+
+body {
+    background: var(--first-color);
+    font-family: Poppins;
+    font-style: normal;
+}
