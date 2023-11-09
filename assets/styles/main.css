@@ -150,13 +150,13 @@
 /* Modal Content */
 .modal-content {
   padding: 0 60px;
-  top: 208px;
   width: 560px;
   position: absolute;
   border-radius: 24px;
   background: var(--fifth-color);
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%,-50%);
 }
 
 .modal-content__head {
