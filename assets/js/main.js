@@ -49,7 +49,7 @@ window.onclick = function (e) {
   }
 };
 
-inputElement.onchange = function (e) {
+inputElement.addEventListener("input",function (e) {
   itemValue.name = e.target.value;
   let btnAddTaskModal = modal.children[0].children[3].children[0];
   if (e.target.value !== "") {
@@ -60,7 +60,11 @@ inputElement.onchange = function (e) {
     btnAddTaskModal.classList.add("disabled");
     btnAddTaskModal.disabled = true;
   }
-};
+  if(inputElement.value.length>200) {
+    btnAddTaskModal.classList.add("disabled");
+    btnAddTaskModal.disabled = true;
+  }
+})
 
 btnSetLevelHigh.onclick = function () {
   btnSetLevelHigh.classList.toggle("high-active");
@@ -96,10 +100,23 @@ function showModalDelete(id) {
 
 function showModalEdit(id) {
   modal.style.display = "block";
-  btnSetLevelLow.classList.add("low-active");
-  itemValue.priority = "Low";
-  btnSetLevelHigh.classList.remove("high-active");
-  btnSetLevelMedium.classList.remove("medium-active");
+  const task = items.filter((item) => item.id === id);
+  if(task[0].priority==="Low") {
+    btnSetLevelLow.classList.add("low-active");
+    itemValue.priority = "Low";
+    btnSetLevelHigh.classList.remove("high-active");
+    btnSetLevelMedium.classList.remove("medium-active");
+  } else if(task[0].priority==="High") {
+    btnSetLevelHigh.classList.add("high-active");
+    itemValue.priority = "High";
+    btnSetLevelLow.classList.remove("low-active");
+    btnSetLevelMedium.classList.remove("medium-active");
+  } else {
+    btnSetLevelMedium.classList.add("medium-active");
+    itemValue.priority = "Medium";
+    btnSetLevelLow.classList.remove("low-active");
+    btnSetLevelHigh.classList.remove("high-active");
+  }
   modal.children[0].children[0].children[0].innerHTML = "Edit Task";
   modal.children[0].children[3].children[0].remove();
   inputElement.placeholder = "Task name";
