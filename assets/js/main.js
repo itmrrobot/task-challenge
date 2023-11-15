@@ -16,7 +16,7 @@ const items = JSON.parse(localStorage.getItem("list")) || [];
 const itemId = Math.max(...items.map((o) => o.id)) || 0;
 let itemValue = {
   id: itemId === -Infinity ? 0 : itemId,
-  priority: "Low",
+  priority: "",
   status: "To do",
   statusIcon: "to-do-icon.svg",
 };
@@ -28,9 +28,9 @@ if (inputElement.value === "") {
 
 btnAdd.onclick = function () {
   modal.style.display = "block";
-  btnSetLevelLow.classList.add("low-active");
-  itemValue.priority = "Low";
+  itemValue.priority = "";
   btnSetLevelHigh.classList.remove("high-active");
+  btnSetLevelLow.classList.remove("low-active");
   btnSetLevelMedium.classList.remove("medium-active");
   modal.children[0].children[0].children[0].innerHTML = "Add Task";
   modal.children[0].children[3].children[0].remove();
@@ -47,12 +47,19 @@ window.onclick = function (e) {
   if (e.target == modal) {
     modal.style.display = "none";
   }
+  if (e.target == modalDelete) {
+    modalDelete.style.display = "none";
+  }
 };
 
-inputElement.addEventListener("input",function (e) {
+inputElement.addEventListener("input", function (e) {
   itemValue.name = e.target.value;
   let btnAddTaskModal = modal.children[0].children[3].children[0];
-  if (e.target.value !== "") {
+  if (
+    e.target.value.trim() !== "" &&
+    itemValue.priority !== "" &&
+    e.target.value.length <= 200
+  ) {
     btnAddTaskModal.classList.remove("disabled");
     btnAddTaskModal.classList.add("active");
     btnAddTaskModal.disabled = false;
@@ -60,36 +67,60 @@ inputElement.addEventListener("input",function (e) {
     btnAddTaskModal.classList.add("disabled");
     btnAddTaskModal.disabled = true;
   }
-  if(inputElement.value.length>200) {
+  if (inputElement.value.length > 200) {
     btnAddTaskModal.classList.add("disabled");
     btnAddTaskModal.disabled = true;
   }
-})
+});
 
 btnSetLevelHigh.onclick = function () {
-  btnSetLevelHigh.classList.toggle("high-active");
+  btnSetLevelHigh.classList.add("high-active");
+  let btnAddTaskModal = modal.children[0].children[3].children[0];
   if (btnSetLevelHigh.classList.contains("high-active") == true) {
     itemValue.priority = "High";
     btnSetLevelLow.classList.remove("low-active");
     btnSetLevelMedium.classList.remove("medium-active");
+    if (inputElement.value.trim() !== "") {
+      btnAddTaskModal.classList.remove("disabled");
+      btnAddTaskModal.classList.add("active");
+      btnAddTaskModal.disabled = false;
+    }
+  } else {
+    itemValue.priority = "";
   }
 };
 
 btnSetLevelMedium.onclick = function () {
-  btnSetLevelMedium.classList.toggle("medium-active");
+  let btnAddTaskModal = modal.children[0].children[3].children[0];
+  btnSetLevelMedium.classList.add("medium-active");
   if (btnSetLevelMedium.classList.contains("medium-active") == true) {
     itemValue.priority = "Medium";
     btnSetLevelHigh.classList.remove("high-active");
     btnSetLevelLow.classList.remove("low-active");
+    if (inputElement.value.trim() !== "") {
+      btnAddTaskModal.classList.remove("disabled");
+      btnAddTaskModal.classList.add("active");
+      btnAddTaskModal.disabled = false;
+    }
+  } else {
+    itemValue.priority = "";
   }
 };
 
 btnSetLevelLow.onclick = function () {
-  btnSetLevelLow.classList.toggle("low-active");
+  let btnAddTaskModal = modal.children[0].children[3].children[0];
+  btnSetLevelLow.classList.add("low-active");
   if (btnSetLevelLow.classList.contains("low-active") == true) {
     itemValue.priority = "Low";
     btnSetLevelHigh.classList.remove("high-active");
     btnSetLevelMedium.classList.remove("medium-active");
+    if (inputElement.value.trim() !== "") {
+      btnAddTaskModal.classList.remove("disabled");
+      btnAddTaskModal.classList.add("active");
+      btnAddTaskModal.disabled = false;
+    }
+  } else {
+    itemValue.priority = "";
   }
 };
 
@@ -101,12 +132,12 @@ function showModalDelete(id) {
 function showModalEdit(id) {
   modal.style.display = "block";
   const task = items.filter((item) => item.id === id);
-  if(task[0].priority==="Low") {
+  if (task[0].priority === "Low") {
     btnSetLevelLow.classList.add("low-active");
     itemValue.priority = "Low";
     btnSetLevelHigh.classList.remove("high-active");
     btnSetLevelMedium.classList.remove("medium-active");
-  } else if(task[0].priority==="High") {
+  } else if (task[0].priority === "High") {
     btnSetLevelHigh.classList.add("high-active");
     itemValue.priority = "High";
     btnSetLevelLow.classList.remove("low-active");
@@ -184,7 +215,7 @@ function listItems() {
 }
 
 function addTask() {
-  if (inputElement.value !== "") {
+  if (inputElement.value.trim() !== "" && itemValue.priority !== "") {
     itemValue.id += 1;
     items.unshift({
       id: itemValue.id,
@@ -203,14 +234,16 @@ function addTask() {
 }
 
 function deleteTask() {
-  const id = Number(modalDelete.id);
-  const check = items.findIndex((item) => Number(item.id) === id);
-  if (check !== -1) {
-    items.splice(check, 1);
-    localStorage.setItem("list", JSON.stringify(items));
-    listItems();
+  if (navigator.onLine == true) {
+    const id = Number(modalDelete.id);
+    const check = items.findIndex((item) => Number(item.id) === id);
+    if (check !== -1) {
+      items.splice(check, 1);
+      localStorage.setItem("list", JSON.stringify(items));
+      listItems();
+    }
+    modalDelete.style.display = "none";
   }
-  modalDelete.style.display = "none";
 }
 
 btnCancel.onclick = function () {
@@ -218,7 +251,7 @@ btnCancel.onclick = function () {
 };
 
 function editTask(id) {
-  if (inputElement.value !== "") {
+  if (inputElement.value.trim() !== "") {
     const task = items.filter((item) => item.id == id);
     task[0].name = inputElement.value;
     task[0].priority = itemValue.priority;
@@ -245,6 +278,6 @@ function changeStatus(id) {
 }
 
 (function () {
-  btnSetLevelLow.classList.add("low-active");
+  //btnSetLevelLow.classList.add("low-active");
   listItems();
 })();
